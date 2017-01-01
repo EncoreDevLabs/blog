@@ -1,0 +1,33 @@
+---
+layout: post
+title: What I learned developing my first App for Mac OS X
+date: '2014-02-07T16:38:34-05:00'
+tags:
+- macapp
+- mac app store
+- apps
+- mac os x
+tumblr_url: http://encoreptl.tumblr.com/post/75929259192/what-i-learned-developing-my-first-app-for-mac-os
+---
+<p>I am an iOS Developer and have developed several apps for iPhone so I decided to create a Mac App for fun and to open source it for others to learn. </p>
+<p>Compared to iOS, there are very few examples and tutorials online teaching you how to write apps for Mac so I decided to make a simple Todo list app. The App is simple in that it allows users to enter todos to their list and check it when its complete. </p>
+<p>For the App I decided to use the principles I learned on iOS of using a table view where each table view cell contains a checkbox and textfield.</p>
+<p>One thing I found different right away was that the table view in Mac Apps contained columns which is different from UITableView which only contains rows of UITableViewCell. Hence the datasource method signature is different in Mac where this method is called to get a NSView for a given row and column.</p>
+<blockquote>
+<p class="p1">- (<span class="s1">NSView</span> *)tableView:(<span class="s1">NSTableView</span> *)tableView viewForTableColumn:(<span class="s1">NSTableColumn</span> *)tableColumn row:(<span class="s1">NSInteger</span>)row</p>
+</blockquote>
+<p>Another thing I found difficult was the ability to rearrange rows in the NSTableView. First I searched on Google and Stackoverflow for some tutorials or sample code but there are very few projects and examples.</p>
+<p>In iOS you just have to implement these two methods with relatively little code to get the rearranging functionality out of box.</p>
+<blockquote>
+<p>- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath</p>
+<p><span>- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)sourceIndexPath toIndexPath:(NSIndexPath *)destinationIndexPath</span></p>
+</blockquote>
+<p><span>In Mac you have to implement these three methods and write a lot of logic code to handle the rearranging of the table view rows</span></p>
+<blockquote>
+<p>- (BOOL)tableView:(NSTableView *)aTableView acceptDrop:(id &lt;NSDraggingInfo&gt;)info row:(NSInteger)row dropOperation:(NSTableViewDropOperation)operation</p>
+<p>- (NSDragOperation)tableView:(NSTableView*)tv validateDrop:(id &lt;NSDraggingInfo&gt;)info proposedRow:(NSInteger)row proposedDropOperation:(NSTableViewDropOperation)operation</p>
+<p>- (BOOL)tableView:(NSTableView *)tv writeRowsWithIndexes:(NSIndexSet *)rowIndexes toPasteboard:(NSPasteboard*)pasteboard</p>
+</blockquote>
+<p>I was not very impressed by this as the logic code to rearrange that could be written in iOS in just 4 lines of code is now 40 lines in Mac. I would imagine that Apple by now would have spent time to make some of the common use cases like these along with deleting a row item easier for developers to implement just like iOS.</p>
+<p>What drew me to iOS was the ability to write less code especially when sticking with Apple&rsquo;s user interaction guidelines and design patterns but I would not say the same for Mac App development.</p>
+<p>The Todo list app source code is posted on Github if anyone is interested in reading the source code or enhancing the app by forking it: https://github.com/ankurp/Todo-List-for-Mac-OS-X</p>

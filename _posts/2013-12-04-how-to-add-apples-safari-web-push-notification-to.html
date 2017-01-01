@@ -1,0 +1,58 @@
+---
+layout: post
+title: How to add Apple's Safari Web Push Notification to your Rails app
+date: '2013-12-04T11:00:00-05:00'
+tags:
+- apple push notifications
+- apple
+- mavericks
+- push notifications
+tumblr_url: http://encoreptl.tumblr.com/post/68982780981/how-to-add-apples-safari-web-push-notification-to
+---
+<p>Few months ago Apple announced the release of their latest OS, Mavericks.</p>
+<p>One of the major features was the ability to send <a href="https://developer.apple.com/notifications/safari-push-notifications/">push notifications</a> to Macs similar to iOS. These notifications like iOS Push Notifications can be customized with your website logo, message and action.</p>
+<p><img alt="image" src="http://68.media.tumblr.com/199c63fa4af0fb150acf73ee164a995b/tumblr_inline_mxafa2GYOQ1qznqgx.png"/></p>
+<h3>Setup</h3>
+<p><span>To setup push notification, add the Web Push Notification Rails gem to Gemfile and bundle install.</span></p>
+<pre><code>gem 'web-push-notification-rails'
+bundle install</code></pre>
+<p>Once the gem is installed you need to download the proper certificates and save it in your Rails app. Create a <strong>cert</strong> folder inside of your Rails app root and store the certificates generated from the steps below here.</p>
+<h3>P12 certificate</h3>
+<p>This the first of 2 certificates you need to sign. Apple has a step-by-step for most of it. You can pick up from step 7. Alternatively, you can follow all of my steps:</p>
+<ol><li>Go to <strong><a href="https://developer.apple.com/devcenter/ios/index.action">iOS Provisioning Portal</a></strong> (you need to login or register)</li>
+<li>Click on <strong>&ldquo;Website Push IDs&rdquo;</strong> on the left side menu</li>
+<li>Click on <strong>&ldquo;New Website Push ID&rdquo;</strong> and fill in the 2 fields</li>
+<li>After you come back to the listing of website push ids, select the created Push Id and click on <strong>&ldquo;Edit&rdquo;</strong> and then <strong>&ldquo;Create Certificate&hellip;&rdquo;</strong></li>
+<li>Follow the steps on <strong>About Creating a Certificate Signing Request (CSR)</strong></li>
+<li>Once you <strong>download</strong> the Certficate.cer, double-click to <strong>install</strong></li>
+<li>In the &ldquo;Keychain Access&rdquo; tool <strong>right-click</strong> on Website Push ID: and select both and right click <strong>&ldquo;Export 2 items&hellip;</strong></li>
+<li>Change &quot;File Format&rdquo; to &ldquo;Personal Information Exchange(.p12)&rdquo; and <strong>save</strong> (preferably to Rails.root/cert/)</li>
+<li>The password you enter during the saving process will go into the initializer (&ldquo;Run Generator&rdquo; step)</li>
+</ol><h3><a class="anchor" href="https://github.com/ankurp/apple-web-push-notification-rails#wwdr-certificate" id="wwdr-certificate" name="wwdr-certificate"></a>WWDR Certificate</h3>
+<p>Second certificate you need to sign the web package</p>
+<ol><li><strong>Download</strong> <a href="http://developer.apple.com/certificationauthority/AppleWWDRCA.cer">http://developer.apple.com/certificationauthority/AppleWWDRCA.cer</a></li>
+<li>Double-click to <strong>install</strong></li>
+<li>In the &ldquo;Keychain Access&rdquo; tool <strong>right-click</strong> on &ldquo;Apple Worldwide Developer Relations Certification Authority&rdquo; and click on <strong>Export &ldquo;Apple&hellip;.</strong></li>
+<li>Change &quot;File Format&rdquo; to &ldquo;Privacy Enhanced Mail (.pem)&rdquo; and <strong>save</strong> it (preferably to Rails.root/cert/)</li>
+</ol><h3><a class="anchor" href="https://github.com/ankurp/apple-web-push-notification-rails#run-generators" id="run-generators" name="run-generators"></a>Run generators</h3>
+<p>Last <strong>password parameter is optional</strong>. You can just edit the initializer later</p>
+<pre><code>   rails g web_notification:notification_package website_name website_service_url website_push_id website_allowed_domain website_url_formatted_string wwdr_certificate_path key_path [cert_password]
+</code></pre>
+<p>Example:</p>
+<pre><code>   rails g web_notification:notification_package mixtapp <a href="https://www.mixtapp.co">https://www.mixtapp.co</a> web.com.encoredevlabs.mixtapp <a href="https://www.mixtapp.co">https://www.mixtapp.co</a> "https://www.mixtapp.co?%@" cert/AppleWWDRCA.cer cert/website_aps_production.cer.p12 password
+</code></pre>
+<p>If password is blank do not enter the last parameter.</p>
+<h3><a class="anchor" href="https://github.com/ankurp/apple-web-push-notification-rails#customize" id="customize" name="customize"></a>Customize</h3>
+<p>If you need to change the password or location of the certificates later you can change it in the web_notification_package_initializer.rb file.</p>
+<p>The package sent to Apple is inside <code>notfication/web_package</code> folder in Rails.root. Customize the icons inside icon.iconset folder. You can also customize the <code>website.json</code> which was genereated using the values specified in the generator. Checkout the <a href="https://developer.apple.com/library/mac/documentation/NetworkingInternet/Conceptual/NotificationProgrammingGuideForWebsites/PushNotifications/PushNotifications.html">Apple documentation</a> link to see what values you need to set in the json file.</p>
+<h3><a class="anchor" href="https://github.com/ankurp/apple-web-push-notification-rails#apple-callback-to-controller" id="apple-callback-to-controller" name="apple-callback-to-controller"></a>Apple Callback to Controller</h3>
+<p>All request from Apple regarding the web package will be sent to <code>apple_web_notifications_controller.rb </code>which you can customize or you can change the generated routes in the routes.rb file and send the Apple callback methods to your desired controller.</p>
+<p>You will need to implement what needs to be done once you get the device token from Apple.</p>
+<h3><a class="anchor" href="https://github.com/ankurp/apple-web-push-notification-rails#features-to-be-implemented" id="features-to-be-implemented" name="features-to-be-implemented"></a>Sending Push notification</h3>
+<p>Currently the gem doesn&rsquo;t provide functionality to send push notification message so to test sending notification use a gem called <a href="https://github.com/nomad/houston">Houston</a>. Once installed you can send push notifications by running the following command. Change the device token along with the certificate path and make sure to run in production environment as it only works in Production.</p>
+<pre><code>  apn push "64BE8308E51B6B91C0D41A8C856274977A6A45650049435C02F5E9944AB9D7F7" -c cert/apple_push_notification.pem -e production -P "{\"aps\":{\"alert\":{\"title\":\"Title test\",\"body\":\"Body test\"},\"url-args\":[\"someparams\"]}}"</code></pre>
+<p><strong>Notes</strong></p>
+<p>You will need SSL certificate to make this work and if you want to try it for free you can get a trial SSL certificate for your server through <a href="http://www.comodo.com">Comodo</a>.</p>
+<p>Also you will need to send push notification to production APNS rather than sandbox.</p>
+<p><span>Checkout the </span><a href="https://developer.apple.com/wwdc/videos/index.php?id=614">Apple WWDC Session Video</a><span> if you want detailed overview on how the Safari push notifications work. </span></p>
+<p>If you want to contribute to this <a href="https://github.com/ankurp/apple-web-push-notification-rails">Gem</a>, submit a pull request.</p>

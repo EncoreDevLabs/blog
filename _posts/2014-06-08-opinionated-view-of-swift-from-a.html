@@ -1,0 +1,31 @@
+---
+layout: post
+title: Opinionated view of Swift from a Ruby/Objective-C/Javascript Developer
+date: '2014-06-08T22:48:43-04:00'
+tags:
+- swift
+- programming
+- language
+tumblr_url: http://encoreptl.tumblr.com/post/88236228430/opinionated-view-of-swift-from-a
+---
+<p>Since everyone is aware of Swift the programming language announced at WWDC I wanted to write a post on the language itself from the point of view of a Ruby/Objective-C/Javascript developer. Having developed in these three languages extensively I find each has its own pros and cons and Swift has adopted some concepts from some of these languages.</p>
+<p>Looking at the language on the day of the announcement I thought it looked similar to some of the modern programming languages like rust and Go as these languages are compiled and use type inference. But after reading the documentation in detail, it seems to adopt notions of functions as being a type that can be passed into function like in Javascript and other functional languages along with string interpolation which I first saw in Ruby but has been in other languages like Perl and PHP as well.</p>
+<p>Since I am generally curious about new technology I usually start learning the technology by creating a project in it. So I decided to write a library called <a href="http://dollar.patellabs.com">Dollar</a> which provides convienice methods for collection types without extending the objects themselves in Swift.</p>
+<p>Writing the library really helped me understand the syntax and fine details of the languages. At first I thought of Swift as an OK language as it did not support modern features like meta programming found in Ruby nor is it like Coffescript, Ruby or Scala where everything has a implicit return type and usually returns the last statement that was evaluated in a block or a method so that statements can be chained. But I was fine with Swift since it was an improvement over writing code in Objective-C.</p>
+<p>Writing the library I learned that Swift has adopted few concepts from Javascript like treating functions as first class citizens and allowing functions to be created inside functions and functions to be passed as parameters to a function and also returning another function inside a function. That is a lot of functions. But it has not adopted ability to invoke a function with variable number of arguments like how you would do in Javascript as seen here (ignore the null part if you are not familiar with Javascript)</p>
+<blockquote>
+<p>function sum(a, b) {<br/>    return a + b;<br/>}<br/>sum.apply(null, [1, 2]); // returns 3</p>
+</blockquote>
+<p>The main issue with Swift is that it allows variable number of arguments in a function, also know as <a href="http://en.wikipedia.org/wiki/Variadic_function">Variadic</a> function, but it doesnt allow to call a variadic function with an array of parameters as I have shown above in the Javascript code. This is even possible in Ruby as seen below and probably in other languages as well where you can call a function and pass an array or elements as arguments which gets converted to appropriate parameters in the function in order.</p>
+<blockquote>
+<p>def sum(a, b)<br/>    a + b<br/>end<br/>sum(*[1, 2])</p>
+</blockquote>
+<p>The reason why I bring this point up, of allowing arguments to be passed in a variadic function as an array of elements, is to create a curry function for the <a href="https://github.com/ankurp/Dollar.swift">Dollar</a> library. Here is a quick example of a <a href="https://medium.com/the-javascript-collection/currying-in-javascript-ce6da2d324fe">curry function</a> in Javascript</p>
+<blockquote>
+<p>var curried = _.curry(function(a, b, c) {<br/>    console.log(a + b + c);<br/>});</p>
+<p>curried(1)(2)(3);<br/>// → 6</p>
+<p>var add3 = curried(1, 2);<br/>add3(3);<br/>// → 6</p>
+</blockquote>
+<p>In order for me to create the curry function I need to be able to invoke the actual function which in the example above prints out addition of all three variables. But unfortunately I do not know how many arguments the actual function might be expecting so I made it variadic in my library code. This is fine until I have to invoke the variadic function with all the arguments. The only way to do it is by calling that function and passing arguments as an array and have the language translate the array to the actual parameters in the functions. But as of now Swift programming language doesnt support invoking a variadic function with an array and hence it has failed my expectations of being modern as even some of the older languages like Objective-C have this basic feature using performSelector.</p>
+<p>As of now there is no way to implement a generic curry function in Swift but if someone comes up with a nice hack please comment or reach out to me as the Apple developers have confirmed on the Apple developer forum that there is no support as of today for this problem.</p>
+<p>So to conclude I think Swift does have some features of a powerful and modern language but it is not perfectly design considering it is built by Apple and that they already had Ruby, Javascript, Scala and many other programming languages to learn from and improve upon their short comings.</p>

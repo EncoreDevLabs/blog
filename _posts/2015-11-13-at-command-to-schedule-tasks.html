@@ -1,0 +1,28 @@
+---
+layout: post
+title: at command to schedule tasks
+date: '2015-11-13T16:04:52-05:00'
+tags:
+- at
+- unix
+- command
+- command line
+tumblr_url: http://encoreptl.tumblr.com/post/66899787445/at-command-to-schedule-tasks
+---
+<p>Recently came across a command in Unix like systems called</p>
+<blockquote>
+<p>at</p>
+</blockquote>
+<p>This command executes any command given at the specified date time. Here is an example</p>
+<p><img src="http://68.media.tumblr.com/a7a756a2b470e16a25130f3bdddc17e6/tumblr_inline_mw7z5i8iNa1qznqgx.png"/></p>
+
+<p></p>
+<p>at takes time and data as parameter so if you want to run a task at midnight on Dec 25th you can run</p>
+<blockquote>
+<p>at midnight Dec 25</p>
+</blockquote>
+<p>followed by the command you want to run and end it by pressing Control-D.</p>
+<p>If you specify just time it will try to execute that command at that time today. If the time is past the current time today then it will execute it tomorrow at that time. For example if you run a command at 3pm and it is 1pm currently then the command will run 2 hours later but if it is 5pm then it will run at 3pm next day.</p>
+<p>Alternately you can pass a file and write commands to that file that you want to run and pass that. Benefit of doing this is that you can keep appending or changing the task file and it will run all the commands in that file.</p>
+<p>The command runs the task only once so to keep running it periodically you need to run the command again or you can run it as the very last task in the task file and the command will then execute at the time specified the next day.</p>
+<p>This command might be useful to some who do not want to setup cron jobs on the server. If you have multiple servers, it might be helpful to have your web application run this command on the machine it runs and it will give you the functionality of scheduled tasks without the hassle of synchronizing the crontab file across all servers.</p>
