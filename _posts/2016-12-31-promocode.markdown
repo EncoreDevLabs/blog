@@ -4,7 +4,7 @@ title:  "Adding Promocodes to your Rails App"
 date:   2016-12-31 10:48:00
 categories: feature rails
 image: /assets/article_images/2016-12-31-promocodes/code.png
-image2: /assets/article_images/2016-12-31-promocodes/code.png
+image2: /assets/article_images/2016-12-31-promocodes/code-mobile.png
 ---
 
 Recently I came across a problem of how to add Promocodes to an ecommerce site built using Rails. Thinking about the problem I thought of good programming practices that I can apply so that the code is clean and maintainable in the future as more different types of promocodes are added to this system. The following are the list of requirements for which I had to build a solution:

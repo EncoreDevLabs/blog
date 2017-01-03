@@ -13,6 +13,10 @@ email: ankur.patel@ymail.com
 logo: "/assets/images/author.png"
 float_logo: true # true, false (default)
 
+markdown: kramdown
+kramdown:
+  input: GFM
+
 # blog cover
 cover: "/assets/images/background_image.jpg"
 
