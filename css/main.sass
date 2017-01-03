@@ -536,6 +536,15 @@ body
     background-size: cover
     background-repeat: no-repeat
     background-position: center
+    &::after
+      background: rgba(0, 0, 0, 0.6)
+      content: ""
+      height: 100%
+      width: 100%
+      display: block
+      position: absolute
+      top: 0
+      left: 0
   .inner
     width: 100%
     position: relative
