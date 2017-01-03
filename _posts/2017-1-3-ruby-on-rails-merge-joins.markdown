@@ -2,7 +2,7 @@
 layout: post
 title:  "Merging Queries in Rails"
 date:   2017-1-3 9:01:00
-categories: feature rails joins
+categories: feature rails activerecord merge
 image: /assets/article_images/2017-1-3/merge.jpg
 image2: /assets/article_images/2017-1-3/merge-mobile.jpg
 ---
