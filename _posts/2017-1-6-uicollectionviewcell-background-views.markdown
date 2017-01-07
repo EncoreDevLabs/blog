@@ -37,7 +37,7 @@ Lets see how we can write the code for this. First lets start out by creating a 
 
 In the code above we set the cell's `contentView` to have a `UILabel`, `backgroundView` of the cell to be new UIView with a background color of light gray and we assigned `selectedBackgroundView` a UIView of red color. Both the `backgroundView` and `selectedBackgroundView` are `nil` by default but now setting them allows us to change the cell background color on selecting and deselecting the cell.
 
-This helps you avoid adding a lot of logic in your CollectionViewControllers to figure out whehter a cell is selected or not and change it on selection. Our CollectionViewController has very little code to handle changing of the background on selection of a cell as seen below:
+This helps you avoid adding a lot of logic in your CollectionViewControllers to figure out whether a cell is selected or not and change it on selection. Our CollectionViewController has very little code to handle changing of the background on selection of a cell as seen below:
 
 {% highlight objc %}
 #import "CollectionViewController.h"
