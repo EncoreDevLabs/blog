@@ -3,8 +3,8 @@ layout: post
 title:  "How to make your own Homekit Enabled Thermostat using Raspberry Pi 3"
 date:   2017-12-25 12:46:00
 categories: feature thermostat raspberrypi home-automation homekit homebridge
-image: /assets/article_images/2017-12-25/homebridge.jpg
-image2: /assets/article_images/2017-12-25/homebridge-mobile.jpg
+image: /assets/article_images/2017-12-25/cover.png
+image2: /assets/article_images/2017-12-25/cover-mobile.png
 ---
 
 This guide will walk through how to build a Homekit enabled Thermostat using a Raspberry Pi 3. You can use other Raspberry Pi but parts listed below and some steps might vary but concept should be same. Also do this at your own risk as the thermostat wires carry a 24V or in rare cases 110V to 220V so if you are not sure I would not recommend attempting this.
