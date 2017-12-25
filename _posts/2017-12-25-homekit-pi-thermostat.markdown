@@ -181,7 +181,11 @@ Homekit is great and lets you control accessories from your iOS devices and even
 
 Since Homekit does not allow you to see historical data for a Homekit enabled accessory we would need a way to record the temperature data along with the start and stop times of our heating or cooling system so we can see how much energy we have consumed. For this we can use an elasticsearch index and graph the temperature reading data using Kibana. We can even store the run time of our system and generate a total or an average per day using Kibana as well.
 
+![Screenshot of Kibana Temperature Reading](/assets/article_images/2017-12-25/kibana.png)
+
 Another extension to this thermostat is to add a [motion sensor](http://a.co/0BX0fPl) so that you can create an Automation using the Home app to turn on the heating/cooling only if there is motion detected otherwise turn it off if there is no motion. You can even write your custom logic similar to Nest to figure out ideal time to turn on and off heating/cooling based on the motion and outside temperature.
+
+![Motion Detection Automation](/assets/article_images/2017-12-25/automation.jpg)
 
 ## Resources
 
