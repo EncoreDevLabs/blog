@@ -27,7 +27,9 @@ We will use Raspberry Pi along with the relay board to turn these switches on an
 
 ## Homekit and Homebridge
 
-To make our thermostat work with Siri and the Home app we need to run a Homekit server and add the accessory to our Home. Thanks for [Homebridge](https://github.com/nfarina/homebridge) it is easy to implement your own homekit server on a Raspberry Pi by simply installing homebridge node module globally and installing any accessories plugins as well. In our case we would need to install the [homebridge-pi-thermostat](https://github.com/ankurp/homebridge-pi-thermostat) plugin and configure the settings in the homebridge and accessories settings in the `~/.homebridge/config.json` file. This homebridge-pi-thermostat plugin implements the logic to turn ON and OFF heating and cooling system based on the desired temperature and mode set via the Home app in iOS and comparing that with the reading of the current temperature coming from the DHT22 temperature sensor attached to the Raspberry Pi.
+To make our thermostat work with Siri and the Home app we need to run a Homekit server on our Raspberry Pi that broadcasts to the network that this is a Thermostat accessory. Thanks for [Homebridge](https://github.com/nfarina/homebridge) it is easy to implement your own homekit server on a Raspberry Pi by simply installing `homebridge` as a node module and installing any homebridge accessories plugins as well.
+
+In our case we would need to install the [homebridge-pi-thermostat](https://github.com/ankurp/homebridge-pi-thermostat) plugin to make our Raspberry Pi be known a smart Thermostat accessory to the Home app on iOS. This homebridge-pi-thermostat plugin implements the logic to turn ON and OFF heating and cooling system based on the desired temperature and mode set via the Home app in iOS. This plugin is also incharge of reading the current temperature coming from the DHT22 temperature sensor attached to the Raspberry Pi and based on temperature change it will either start or stop the heating/cooling system.
 
 ![Home App Thermostat Accessory Auto Setting](/assets/article_images/2017-12-25/home-app-thermostat.png)
 
@@ -47,11 +49,11 @@ To make your own Homekit enabled Thermostat you will need these parts. For this 
 
 For this project use [Raspbian Stretch Lite image](https://www.raspberrypi.org/downloads/raspbian/) which you can download from the official Raspberry Pi website.
 
-Once the Image is downloaded install it on the Micro SD card using [Etcher](https://etcher.io) or command line if you prefer.
+Once the Raspbian OS image is downloaded, copy it on the Micro SD card using [Etcher](https://etcher.io) or command line if you prefer.
 
 ### Enable SSH
 
-Once the image is installed mount the Micro SD card and create an empty file inside of the `/boot` drive of the Micro SD Card. On macOS to create the ssh file run the following command.
+Once the OS is copied, mount the Micro SD card and create an empty file inside of the `/boot` drive of the Micro SD Card. On macOS to create the ssh file run the following command.
 
 ```sh
 cd /Volumes/boot && touch ssh
@@ -59,7 +61,7 @@ cd /Volumes/boot && touch ssh
 
 ### Configure Wifi
 
-To automatically connect the Raspberry Pi to the Wifi on the initial boot up create a `wpa_supplicant.conf` inside of the `/boot` drive. Enter the credentials to your Wifi in this file by copy pasting the contents below and replacing it with your Wifi name and password.
+To automatically connect the Raspberry Pi to your home Wifi on the initial boot up, create a `wpa_supplicant.conf` inside of the `/boot` drive. Enter the credentials to your Wifi in this file by copy pasting the contents below and replacing it with your Wifi name and password.
 
 ```
 ctrl_interface=DIR=/var/run/wpa_supplicant GROUP=netdev
@@ -73,13 +75,14 @@ network={
 }
 ```
 
-We are done with our image now. On the first boot it will connect to your Wifi and we can ssh into the Raspberry Pi for later homebridge installation.
+We are done with imaging our Micro SD card now. On the first boot it will connect to your home's Wifi and we can `ssh` into the Raspberry Pi for later homebridge installation.
 
 ## Hardware Assembly
 
-1. Insert the Micro SD Card into the Raspberry Pi
+1. Insert the Micro SD Card into the Raspberry Pi.
 1. Connect the 3 channel Relay board Hat with its support to the Raspberry Pi.
 1. Connect the DHT22 Temperature/Humidity Sensor to the Raspberry Pi. Insert the Positive (+) end via the jumper cable to the 3V Pin on the GPIO pins of the relay board. Connect the Negative (-) end via the jumper cable to the Ground (GND) Pin and Connecting the Data end via the jumper cable to the GPIO Pin 4. The pin number might be different on the relay board.
+![GPIO Pin Diagram](/assets/article_images/2017-12-25/pi-gpio.png)
 1. Now moving on to the wiring. Cut two small pieces of wire. Insert one end of the first wire into the Normally Open (NO) terminal of Relay 1 and insert the other end of the first wire to the Normally Open (NO) terminal of Relay 2. Also insert one end of the second wire into the Normally Open (NO) terminal of Relay 2 and insert the other end of the second end to the Normally Open (NO) terminal of Realy 3. This connection will allow us to wire only one of the Normally Open (NO) to the R wire and all of them will be the positive 24V power connection.
 1. Now we need to cut 4 more wires to connect the four terminal (R, W, Y, G) from the Thermostat to the terminals on the relay board.
 ![Wiring to Thermostat showing R, W, Y, G terminals](/assets/article_images/2017-12-25/wiring.JPG)
