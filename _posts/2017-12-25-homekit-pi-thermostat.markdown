@@ -189,5 +189,4 @@ Another extension to this thermostat is to add a [motion sensor](http://a.co/0BX
 
 ## Resources
 
-* Homebridge - https://github.com/nfarina/homebridge
 * Homebridge Pi Thermostat Plugin - https://github.com/ankurp/homebridge-pi-thermostat
