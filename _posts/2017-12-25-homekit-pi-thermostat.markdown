@@ -174,3 +174,16 @@ homebridge
 Now open the Home app on your iPhone and iPad and add an accessory and scan the QR code. Great now you are done and have a Homekit thermostat that can turn on and off your heating and cooling system based.
 
 <img width="320px" title="Auto Setting" src ="https://user-images.githubusercontent.com/498669/34306432-116a3cfc-e711-11e7-9fae-6662bd781fde.PNG" /><img width="320px" title="Auto Setting Temperature" src ="https://user-images.githubusercontent.com/498669/34306435-14f0e088-e711-11e7-88e5-6803eff486f4.PNG" /><img width="320px" title="Heat Setting Temperature" src ="https://user-images.githubusercontent.com/498669/34306426-0ddd1636-e711-11e7-9f1d-2f39141eadf2.PNG" /><img width="320px" title="Info Screen Part 1" src ="https://user-images.githubusercontent.com/498669/34306428-0f9f2f04-e711-11e7-87c9-6c3b9b7e88fe.PNG" /><img width="320px" title="Info Screen Part 2" src ="https://user-images.githubusercontent.com/498669/34306425-0c499448-e711-11e7-957b-ce92402b4d49.PNG" />
+
+## Additional Functionality
+
+Homekit is great and lets you control accessories from your iOS devices and even when you are outside your home network if you have a home hub setup via your Apple TV or iPad. Here are some ideas where you can expand upon this.
+
+Since Homekit does not allow you to see historical data for a Homekit enabled accessory we would need a way to record the temperature data along with the start and stop times of our heating or cooling system so we can see how much energy we have consumed. For this we can use an elasticsearch index and graph the temperature reading data using Kibana. We can even store the run time of our system and generate a total or an average per day using Kibana as well.
+
+Another extension to this thermostat is to add a [motion sensor](http://a.co/0BX0fPl) so that you can create an Automation using the Home app to turn on the heating/cooling only if there is motion detected otherwise turn it off if there is no motion. You can even write your custom logic similar to Nest to figure out ideal time to turn on and off heating/cooling based on the motion and outside temperature.
+
+## Resources
+
+* Homebridge - https://github.com/nfarina/homebridge
+* Homebridge Pi Thermostat Plugin - https://github.com/ankurp/homebridge-pi-thermostat
