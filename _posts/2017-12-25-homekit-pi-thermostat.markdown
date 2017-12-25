@@ -7,27 +7,33 @@ image: /assets/article_images/2017-12-25/cover.png
 image2: /assets/article_images/2017-12-25/cover-mobile.png
 ---
 
-This guide will walk through how to build a Homekit enabled Thermostat using a Raspberry Pi 3. You can use other Raspberry Pi but parts listed below and some steps might vary but concept should be same. Also do this at your own risk as the thermostat wires carry a 24V or in rare cases 110V to 220V so if you are not sure I would not recommend attempting this.
+This guide will walk through how to build a Homekit enabled Thermostat using a Raspberry Pi 3. You can use other Raspberry Pi models but if you do the parts listed below and some of the steps might vary but concept should be the same. Also do this at your own risk as the thermostat wires carry 24V DC or in rare cases 110V to 220V AC. 
 
-## How Thermostat work
+We will first start by understanding how a thermostat works so we have an understanding of what our Raspberry Pi needs to do to make this work. Next we will learn about the parts we need for this project and how to assemble it. Finally we will learn how to install and configure the required software to be able to use it with Apple's Homekit. So lets get started.
 
-Thermostat work by shorting or connecting the Power wire (R or Rc or Rh) wire to the wire for Heating, Cooling or Fan.
+## How a Thermostat Works
 
-* Fan - To turn on fan only mode you need to short or connect Power wire (R) to the Green Wire (G). If you disconnect the R and the G wire then Fan will stop immediately.
-* Heating - To turn on Heat you need to short or connect Power wire (R) to the White wire (W). This will turn on the furnace and after about a minute turn on the fan so that the heat is circulated. Disconnecting the R and W wire will turn off the heat but the fan may keep blowing for about a minute to push out all of the heat before turning off completely.
-* Cooling - To turn on Cooling/AC you need to short or connect the Power wire (R) to the Yellow wire (Y). This will turn on the compressor and start the fan. Disconnecting the R and Y wire will turn off the cooling but the fan may keep blowing for about a minute to push out all of the cool air before turning off completely.
+Thermostat work by shorting or connecting the Power wire (R or Rc or Rh) wire to the wire for Heating (W), Cooling (Y) or Fan (G) that is connected to the Thermostat.
 
-Having a little knowledge about how this works we can easily make a thermostat using the rules mentioned above to turn on and off fan, heat and cooling. To connect or short wires we will need a switch which is called a Relay that basically connects when the relay switch is turned on and disconnects the wires when the relay switch is turned off.
+![R, W, Y, G Wiring connected to the Thermostat](/assets/article_images/2017-12-25/thermostat-wiring.jpg)
+
+* Fan - To turn ON the fan only you need to short or connect Power wire (R) to the Green Wire (G). If you disconnect the R and the G wire then Fan will stop immediately.
+* Heating - To turn ON Heat you need to short or connect Power wire (R) to the White wire (W). This will turn on the furnace and after about a minute turn on the fan so that the heat is circulated. Disconnecting the R and W wire will turn OFF the heat but the fan may keep blowing for about a minute to push out all of the heat before turning off completely.
+* Cooling - To turn ON Cooling/AC you need to short or connect the Power wire (R) to the Yellow wire (Y). This will turn on the compressor and start the fan. Disconnecting the R and Y wire will turn OFF the cooling but the fan may keep blowing for about a minute to push out all of the cool air before turning off completely.
+
+Having a little knowledge about how this works, we can easily make a thermostat using the rules mentioned above to turn on and off fan, heat and cooling. To connect or short wires we will need a switch which is called a Relay that basically connects when the relay switch is turned ON and disconnects the wires when the relay switch is turned OFF.
 
 We will use Raspberry Pi along with the relay board to turn these switches on and off at appropriate times. For example when heat mode is ON and the current temperature is below the desired temperature then we need to turn the relay switch on that connects the power wire (R) to white wire (W). When the heat mode is ON and current temperature goes above the desired temperature then we need to turn the relay switch off so that it disconnects the power wire (R) to white wire (W).
 
 ## Homekit and Homebridge
 
-To make our thermostat work with Siri and the Home app we need to run a Homekit server and add the accessory to our Home. Thanks for [Homebridge](https://github.com/nfarina/homebridge) it is easy to implement your own homekit server on a Raspberry Pi by simply installing homebridge node module globally and installing any accessories plugins as well. In our case we would need to install the [homebridge-pi-thermostat](https://github.com/ankurp/homebridge-pi-thermostat) plugin and configure the settings in the homebridge and accessories settings in the `~/.homebridge/config.json` file.
+To make our thermostat work with Siri and the Home app we need to run a Homekit server and add the accessory to our Home. Thanks for [Homebridge](https://github.com/nfarina/homebridge) it is easy to implement your own homekit server on a Raspberry Pi by simply installing homebridge node module globally and installing any accessories plugins as well. In our case we would need to install the [homebridge-pi-thermostat](https://github.com/ankurp/homebridge-pi-thermostat) plugin and configure the settings in the homebridge and accessories settings in the `~/.homebridge/config.json` file. This homebridge-pi-thermostat plugin implements the logic to turn ON and OFF heating and cooling system based on the desired temperature and mode set via the Home app in iOS and comparing that with the reading of the current temperature coming from the DHT22 temperature sensor attached to the Raspberry Pi.
+
+![Home App Thermostat Accessory Auto Setting](/assets/article_images/2017-12-25/home-app-thermostat.png)
 
 ## Part List
 
-To make your own Homekit enabled Thermostat you will need these parts. For this guide we are using Raspberry Pi 3 but you can use any other Raspberry Pi and parts will differ:
+To make your own Homekit enabled Thermostat you will need these parts. For this guide we are using Raspberry Pi 3:
 
 1. Raspberry Pi 3 - http://a.co/hC1BX7C
 1. 8GB+ Micro SD Card - http://a.co/df7Z1Hy
@@ -48,7 +54,7 @@ Once the Image is downloaded install it on the Micro SD card using [Etcher](http
 Once the image is installed mount the Micro SD card and create an empty file inside of the `/boot` drive of the Micro SD Card. On macOS to create the ssh file run the following command.
 
 ```sh
-$ cd /Volumes/boot && touch ssh
+cd /Volumes/boot && touch ssh
 ```
 
 ### Configure Wifi
@@ -91,30 +97,30 @@ We are done with our image now. On the first boot it will connect to your Wifi a
 
 ## Setting up Homebridge
 
-SSH into the Raspberry Pi after powering up the raspberry pi. To ssh run the following command
+SSH into the Raspberry Pi after powering up the raspberry pi. To ssh run the following command in the Terminal
 
 ```sh
-$ ssh pi@raspberrypi.local
+ssh pi@raspberrypi.local
 ```
 
 The password will be `raspberry` by default. You can change it if you want using the `passwd` command.
 
-Now install nodejs and few other dependencies on your raspberry pi using the following command.
+Now install nodejs and few other dependencies on your Raspberry Pi using the following command:
 
 ```sh
-$ curl -sL https://deb.nodesource.com/setup_8.x | sudo -E bash - && sudo apt-get install -y nodejs libavahi-compat-libdnssd-dev
+curl -sL https://deb.nodesource.com/setup_8.x | sudo -E bash - && sudo apt-get install -y nodejs libavahi-compat-libdnssd-dev
 ```
 
-We also need to install [BCM2835](http://www.airspayce.com/mikem/bcm2835/) library by running the commands below
+We also need to install [BCM2835](http://www.airspayce.com/mikem/bcm2835/) library by running the commands below:
 
 ```
-$ wget http://www.airspayce.com/mikem/bcm2835/bcm2835-1.52.tar.gz && tar zxvf bcm2835-1.52.tar.gz && cd bcm2835-1.xx && ./configure && make && sudo make check && sudo make install
+wget http://www.airspayce.com/mikem/bcm2835/bcm2835-1.52.tar.gz && tar zxvf bcm2835-1.52.tar.gz && cd bcm2835-1.52 && ./configure && make && sudo make check && sudo make install
 ```
 
 Once we have nodejs and other dependencies installed, we can install homebridge and the homebridge-pi-thermostat plugin as a global npm node module using this command.
 
 ```sh
-$ sudo npm install -g --unsafe-perm homebridge homebridge-pi-thermostat
+sudo npm install -g --unsafe-perm homebridge homebridge-pi-thermostat
 ```
 
 Next create the homebridge configuration file `~/.homebridge/config.json` and copy the following configuration. Modify the configuration below if the wiring is different.
@@ -157,7 +163,7 @@ The other configuration for minimum on off time and blower turn off time can be 
 To start it all up run the following command in the terminal. If everything is installed correctly homebridge will print a QR Code.
 
 ```sh
-$ homebridge
+homebridge
 ```
 
 ![Upon launching Homebridge](/assets/article_images/2017-12-25/qr-code.png)
