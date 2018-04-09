@@ -119,10 +119,6 @@ blockquote {
     }
 }
 
-pre.highlight {
-    background: #eef;
-}
-
 /**
  * Code formatting
  */
