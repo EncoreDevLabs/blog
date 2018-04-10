@@ -6,7 +6,7 @@ gems:
 # Site settings
 title: "Ankur અંકુર Patel"
 description: > # this means to ignore newlines until "email:"
-  Full Stack Ruby on Rails, Frontend Web and native iOS App Developer | Author of Hands-on Full Stack Swift Development amazon.com/author/ankurpatel
+  Full Stack Ruby on Rails, Frontend Web and native iOS App Developer | Author of "Hands-on Full-Stack Development with Swift" amazon.com/author/ankurpatel
 
 email: ankur.patel@ymail.com
 #blog logo
