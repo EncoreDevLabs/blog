@@ -6,7 +6,7 @@ gems:
 # Site settings
 title: "Ankur અંકુર Patel"
 description: > # this means to ignore newlines until "email:"
-  Ruby on Rails, iOS and Frontend Web Development follow me on Twitter @AnkurPatel
+  Full Stack Ruby on Rails, Frontend Web and native iOS App Developer | Author of Hands-on Full Stack Swift Development amazon.com/author/ankurpatel
 
 email: ankur.patel@ymail.com
 #blog logo
@@ -26,7 +26,7 @@ author_image: "/assets/images/author.png"
 
 paginate:	5
 
-url: "http://blog.encoredevlabs.com" # the base hostname & protocol for your site
+url: "https://blog.encoredevlabs.com" # the base hostname & protocol for your site
 baseurl: ""
 #used to display twitter cards
 twitter_handle: '@AnkurPatel'
