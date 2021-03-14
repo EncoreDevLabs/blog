@@ -39,7 +39,7 @@ social:
   - icon:	twitter
     url:	https://twitter.com/AnkurPatel
     desc: Follow me on twitter
-    share_url: http://twitter.com/share
+    share_url: https://twitter.com/share
     share_title: ?text=
     share_link: "&amp;url="
 

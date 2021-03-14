@@ -3,7 +3,7 @@ layout: post
 title: Passing Arguments in JSONP callback
 date: '2012-09-17T01:32:00-04:00'
 tags: []
-tumblr_url: http://encoreptl.tumblr.com/post/31716362401/passing-arguments-in-jsonp-callback
+tumblr_url: https://encoreptl.tumblr.com/post/31716362401/passing-arguments-in-jsonp-callback
 ---
 <p>It is not possible to pass arguments in your JSONP callback function directly currently as the callback function is invoked with only one argument and that is the response from the server. To solve this problem there is a hack in javascript you can do to pass arguments to your callback function.</p>
 <p>First lets review functions and their scope. Any function you create using the syntax below can be invoked by just calling the someFunc() or window.someFunc() since the function is part of the global scope and all global variables and functions are attributes of the window object.</p>

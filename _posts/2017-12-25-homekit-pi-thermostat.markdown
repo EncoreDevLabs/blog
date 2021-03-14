@@ -37,12 +37,12 @@ In our case we would need to install the [homebridge-pi-thermostat](https://gith
 
 To make your own Homekit enabled Thermostat you will need these parts. For this guide we are using Raspberry Pi 3:
 
-1. Raspberry Pi 3 - http://a.co/hC1BX7C
-1. 8GB+ Micro SD Card - http://a.co/df7Z1Hy
-1. 5V Micro USB Adapter - http://a.co/j9QBM2Q
-1. 3 Channel Relay Board - http://a.co/7Qw3WIG
-1. DHT22 Temperature and Humidity Sensor with Jumper cable - http://a.co/ao5nXKV
-1. Wires - http://a.co/2DU7PJX
+1. Raspberry Pi 3 - https://a.co/hC1BX7C
+1. 8GB+ Micro SD Card - https://a.co/df7Z1Hy
+1. 5V Micro USB Adapter - https://a.co/j9QBM2Q
+1. 3 Channel Relay Board - https://a.co/7Qw3WIG
+1. DHT22 Temperature and Humidity Sensor with Jumper cable - https://a.co/ao5nXKV
+1. Wires - https://a.co/2DU7PJX
 1. Paper or cardboard case to enclose everything
 
 ## Install Raspbian on Micro SD Card
@@ -183,7 +183,7 @@ Since Homekit does not allow you to see historical data for a Homekit enabled ac
 
 ![Screenshot of Kibana Temperature Reading](/assets/article_images/2017-12-25/kibana.png)
 
-Another extension to this thermostat is to add a [motion sensor](http://a.co/0BX0fPl) so that you can create an Automation using the Home app to turn on the heating/cooling only if there is motion detected otherwise turn it off if there is no motion. You can even write your custom logic similar to Nest to figure out ideal time to turn on and off heating/cooling based on the motion and outside temperature.
+Another extension to this thermostat is to add a [motion sensor](https://a.co/0BX0fPl) so that you can create an Automation using the Home app to turn on the heating/cooling only if there is motion detected otherwise turn it off if there is no motion. You can even write your custom logic similar to Nest to figure out ideal time to turn on and off heating/cooling based on the motion and outside temperature.
 
 ![Motion Detection Automation](/assets/article_images/2017-12-25/automation.jpg)
 
